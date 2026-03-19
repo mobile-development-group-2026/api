@@ -23,7 +23,7 @@ module Api
       private
 
       def sync_params
-        params.require(:user).permit(:role, :first_name, :last_name, :email, :phone)
+        params.fetch(:user, {}).permit(:role, :first_name, :last_name, :email, :phone)
       end
 
       def extract_clerk_id_from_token_or_header
