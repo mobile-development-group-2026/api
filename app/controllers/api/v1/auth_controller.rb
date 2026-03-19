@@ -58,6 +58,7 @@ module Api
           bio: user.bio,
           university: user.university,
           verified: user.verified,
+          onboarded: user.onboarded,
           last_seen_at: user.last_seen_at,
           created_at: user.created_at,
           updated_at: user.updated_at
