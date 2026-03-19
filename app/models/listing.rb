@@ -1,0 +1,19 @@
+class Listing < ApplicationRecord
+  belongs_to :user
+  has_many :listing_photos, dependent: :destroy
+
+  validates :title, presence: true
+  validates :address, presence: true
+  validates :rent, presence: true, numericality: { greater_than: 0 }
+  validates :listing_type, presence: true, inclusion: { in: %w[property room] }
+  validates :status, presence: true, inclusion: { in: %w[active rented archived] }
+  validates :property_type, inclusion: { in: %w[apartment house room studio] }, allow_nil: true
+
+  scope :active, -> { where(status: "active") }
+  scope :by_type, ->(type) { where(listing_type: type) if type.present? }
+  scope :by_city, ->(city) { where("LOWER(city) = ?", city.downcase) if city.present? }
+  scope :by_status, ->(status) { where(status: status) if status.present? }
+  scope :by_bedrooms, ->(count) { where(bedrooms: count) if count.present? }
+  scope :min_price, ->(price) { where("rent >= ?", price) if price.present? }
+  scope :max_price, ->(price) { where("rent <= ?", price) if price.present? }
+end

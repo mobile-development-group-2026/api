@@ -1,0 +1,11 @@
+class CreateListingPhotos < ActiveRecord::Migration[8.0]
+  def change
+    create_table :listing_photos, id: :uuid do |t|
+      t.references :listing, null: false, foreign_key: true, type: :uuid
+      t.string :photo_url, null: false
+      t.integer :position, default: 0, null: false
+
+      t.timestamps
+    end
+  end
+end

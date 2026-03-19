@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: roomora_production
-  username: roomora
-  password: <%= ENV["ROOMORA_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>

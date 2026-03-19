@@ -1,0 +1,25 @@
+databases:
+  - name: roomora-db
+    plan: free
+    databaseName: roomora_production
+
+services:
+  - type: web
+    name: roomora-api
+    runtime: ruby
+    plan: free
+    buildCommand: ./bin/render-build.sh
+    startCommand: bundle exec puma -C config/puma.rb
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: roomora-db
+          property: connectionString
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: CLERK_DOMAIN
+        sync: false
