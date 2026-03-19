@@ -15,6 +15,7 @@ module Api
 
         user = User.find_or_initialize_by(clerk_id: clerk_id)
         user.assign_attributes(sync_params) if user.new_record?
+        user.last_seen_at = Time.current
         user.save!
 
         render json: { data: user_json(user) }, status: user.previously_new_record? ? :created : :ok
@@ -57,6 +58,7 @@ module Api
           bio: user.bio,
           university: user.university,
           verified: user.verified,
+          last_seen_at: user.last_seen_at,
           created_at: user.created_at,
           updated_at: user.updated_at
         }
