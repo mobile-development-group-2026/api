@@ -13,7 +13,7 @@ module Api
       private
 
       def profile_params
-        params.require(:user).permit(:first_name, :last_name, :phone, :avatar_url, :bio, :university, :onboarded)
+        params.require(:user).permit(:first_name, :last_name, :phone, :avatar_url, :bio, :onboarded)
       end
 
       def user_json(user)
@@ -27,7 +27,6 @@ module Api
           phone: user.phone,
           avatar_url: user.avatar_url,
           bio: user.bio,
-          university: user.university,
           verified: user.verified,
           onboarded: user.onboarded,
           created_at: user.created_at,
@@ -38,24 +37,36 @@ module Api
           json[:student_profile] = student_profile_json(user.student_profile)
         end
 
+        if user.lifestyle_profile
+          json[:lifestyle_profile] = lifestyle_profile_json(user.lifestyle_profile)
+        end
+
         json
       end
 
       def student_profile_json(profile)
         {
           id: profile.id,
-          date_of_birth: profile.date_of_birth,
-          gender: profile.gender,
-          academic_level: profile.academic_level,
-          budget_min: profile.budget_min,
-          budget_max: profile.budget_max,
-          move_in_date: profile.move_in_date,
+          university: profile.university,
+          major: profile.major,
+          age: profile.age,
+          graduation_year: profile.graduation_year
+        }
+      end
+
+      def lifestyle_profile_json(profile)
+        {
+          id: profile.id,
           noise_level: profile.noise_level,
-          cleanliness: profile.cleanliness,
-          guests_policy: profile.guests_policy,
-          daily_routine: profile.daily_routine,
-          pets_ok: profile.pets_ok,
-          smoking_ok: profile.smoking_ok
+          cleanliness_level: profile.cleanliness_level,
+          sleep_schedule: profile.sleep_schedule,
+          smoking_allowed: profile.smoking_allowed,
+          pets_allowed: profile.pets_allowed,
+          parties_allowed: profile.parties_allowed,
+          guest_frequency: profile.guest_frequency,
+          lifestyle_tags: profile.lifestyle_tags,
+          move_in_date: profile.move_in_date,
+          max_budget: profile.max_budget
         }
       end
     end

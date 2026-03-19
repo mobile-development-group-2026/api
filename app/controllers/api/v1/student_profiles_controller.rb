@@ -22,10 +22,7 @@ module Api
 
       def profile_params
         params.require(:student_profile).permit(
-          :date_of_birth, :gender, :academic_level,
-          :budget_min, :budget_max, :move_in_date,
-          :noise_level, :cleanliness, :guests_policy,
-          :daily_routine, :pets_ok, :smoking_ok
+          :university, :major, :age, :graduation_year
         )
       end
 
@@ -33,18 +30,10 @@ module Api
         {
           id: profile.id,
           user_id: profile.user_id,
-          date_of_birth: profile.date_of_birth,
-          gender: profile.gender,
-          academic_level: profile.academic_level,
-          budget_min: profile.budget_min,
-          budget_max: profile.budget_max,
-          move_in_date: profile.move_in_date,
-          noise_level: profile.noise_level,
-          cleanliness: profile.cleanliness,
-          guests_policy: profile.guests_policy,
-          daily_routine: profile.daily_routine,
-          pets_ok: profile.pets_ok,
-          smoking_ok: profile.smoking_ok,
+          university: profile.university,
+          major: profile.major,
+          age: profile.age,
+          graduation_year: profile.graduation_year,
           created_at: profile.created_at,
           updated_at: profile.updated_at
         }

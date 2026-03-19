@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_19_000006) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_19_000009) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "lifestyle_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.integer "noise_level"
+    t.integer "cleanliness_level"
+    t.string "sleep_schedule"
+    t.boolean "smoking_allowed", default: false, null: false
+    t.boolean "pets_allowed", default: false, null: false
+    t.boolean "parties_allowed", default: false, null: false
+    t.integer "guest_frequency"
+    t.text "lifestyle_tags"
+    t.date "move_in_date"
+    t.decimal "max_budget", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_lifestyle_profiles_on_user_id", unique: true
+  end
 
   create_table "listing_photos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "listing_id", null: false
@@ -59,20 +76,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_19_000006) do
 
   create_table "student_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
-    t.date "date_of_birth"
-    t.string "gender"
-    t.string "academic_level"
-    t.decimal "budget_min", precision: 10, scale: 2
-    t.decimal "budget_max", precision: 10, scale: 2
-    t.date "move_in_date"
-    t.integer "noise_level"
-    t.integer "cleanliness"
-    t.integer "guests_policy"
-    t.string "daily_routine"
-    t.boolean "pets_ok", default: false, null: false
-    t.boolean "smoking_ok", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "university"
+    t.string "major"
+    t.integer "age"
+    t.integer "graduation_year"
     t.index ["user_id"], name: "index_student_profiles_on_user_id", unique: true
   end
 
@@ -85,7 +94,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_19_000006) do
     t.string "phone"
     t.string "avatar_url"
     t.text "bio"
-    t.string "university"
     t.boolean "verified", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -96,6 +104,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_19_000006) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "lifestyle_profiles", "users"
   add_foreign_key "listing_photos", "listings"
   add_foreign_key "listings", "users"
   add_foreign_key "student_profiles", "users"
