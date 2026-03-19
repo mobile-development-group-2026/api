@@ -13,7 +13,7 @@ module Api
       private
 
       def profile_params
-        params.require(:user).permit(:first_name, :last_name, :phone, :avatar_url, :bio, :onboarded)
+        params.require(:user).permit(:first_name, :last_name, :phone, :avatar_url, :onboarded)
       end
 
       def user_json(user)
@@ -26,7 +26,6 @@ module Api
           email: user.email,
           phone: user.phone,
           avatar_url: user.avatar_url,
-          bio: user.bio,
           verified: user.verified,
           onboarded: user.onboarded,
           created_at: user.created_at,
@@ -50,7 +49,9 @@ module Api
           university: profile.university,
           major: profile.major,
           age: profile.age,
-          graduation_year: profile.graduation_year
+          birth_year: profile.birth_year,
+          graduation_year: profile.graduation_year,
+          bio: profile.bio
         }
       end
 

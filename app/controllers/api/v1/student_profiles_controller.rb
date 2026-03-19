@@ -22,7 +22,7 @@ module Api
 
       def profile_params
         params.require(:student_profile).permit(
-          :university, :major, :age, :graduation_year
+          :university, :major, :age, :birth_year, :graduation_year, :bio
         )
       end
 
@@ -33,7 +33,9 @@ module Api
           university: profile.university,
           major: profile.major,
           age: profile.age,
+          birth_year: profile.birth_year,
           graduation_year: profile.graduation_year,
+          bio: profile.bio,
           created_at: profile.created_at,
           updated_at: profile.updated_at
         }

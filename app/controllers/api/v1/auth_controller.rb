@@ -55,7 +55,6 @@ module Api
           email: user.email,
           phone: user.phone,
           avatar_url: user.avatar_url,
-          bio: user.bio,
           verified: user.verified,
           onboarded: user.onboarded,
           last_seen_at: user.last_seen_at,

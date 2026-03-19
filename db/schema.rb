@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_19_000009) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_19_000010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -82,6 +82,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_19_000009) do
     t.string "major"
     t.integer "age"
     t.integer "graduation_year"
+    t.text "bio"
+    t.integer "birth_year"
     t.index ["user_id"], name: "index_student_profiles_on_user_id", unique: true
   end
 
@@ -93,7 +95,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_19_000009) do
     t.string "email", null: false
     t.string "phone"
     t.string "avatar_url"
-    t.text "bio"
     t.boolean "verified", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
