@@ -1,0 +1,151 @@
+  [1m[35m (8376.5ms)[0m  [1m[35mCREATE DATABASE "roomora_development" ENCODING = 'unicode' /*application='Roomora'*/[0m
+  [1m[35m (458.1ms)[0m  [1m[35mCREATE DATABASE "roomora_development" ENCODING = 'unicode' /*application='Roomora'*/[0m
+  [1m[35m (374.7ms)[0m  [1m[35mCREATE DATABASE "roomora_development" ENCODING = 'unicode' /*application='Roomora'*/[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[35mSET search_path TO public /*application='Roomora'*/[0m
+  [1m[35m (834.8ms)[0m  [1m[35mCREATE DATABASE "roomora_development" ENCODING = 'unicode' /*application='Roomora'*/[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO public /*application='Roomora'*/[0m
+  [1m[35m (659.0ms)[0m  [1m[35mCREATE DATABASE "roomora_test" ENCODING = 'unicode' /*application='Roomora'*/[0m
+  [1m[35mSQL (2.2ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Roomora'*/[0m
+  [1m[35mSQL (54.8ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "pgcrypto" /*application='Roomora'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE IF EXISTS "lifestyle_profiles" CASCADE /*application='Roomora'*/[0m
+  [1m[35m (13.5ms)[0m  [1m[35mCREATE TABLE "lifestyle_profiles" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "user_id" uuid NOT NULL, "noise_level" integer, "cleanliness_level" integer, "sleep_schedule" character varying, "smoking_allowed" boolean DEFAULT FALSE NOT NULL, "pets_allowed" boolean DEFAULT FALSE NOT NULL, "parties_allowed" boolean DEFAULT FALSE NOT NULL, "guest_frequency" integer, "lifestyle_tags" text, "move_in_date" date, "max_budget" decimal(10,2), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Roomora'*/[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_lifestyle_profiles_on_user_id" ON "lifestyle_profiles" ("user_id") /*application='Roomora'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "listing_photos" CASCADE /*application='Roomora'*/[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE TABLE "listing_photos" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "listing_id" uuid NOT NULL, "photo_url" character varying NOT NULL, "position" integer DEFAULT 0 NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Roomora'*/[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE INDEX "index_listing_photos_on_listing_id" ON "listing_photos" ("listing_id") /*application='Roomora'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "listings" CASCADE /*application='Roomora'*/[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE TABLE "listings" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "user_id" uuid NOT NULL, "listing_type" character varying NOT NULL, "title" character varying NOT NULL, "description" text, "property_type" character varying, "address" character varying NOT NULL, "city" character varying, "state" character varying, "zip_code" character varying, "latitude" decimal(10,7), "longitude" decimal(10,7), "rent" decimal(10,2) NOT NULL, "security_deposit" decimal(10,2), "utilities_included" boolean DEFAULT FALSE NOT NULL, "utilities_cost" decimal(10,2), "available_date" date, "lease_term_months" integer, "bedrooms" integer, "bathrooms" integer, "pets_allowed" boolean DEFAULT FALSE NOT NULL, "parties_allowed" boolean DEFAULT FALSE NOT NULL, "smoking_allowed" boolean DEFAULT FALSE NOT NULL, "status" character varying DEFAULT 'active' NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Roomora'*/[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE INDEX "index_listings_on_latitude_and_longitude" ON "listings" ("latitude", "longitude") /*application='Roomora'*/[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE INDEX "index_listings_on_listing_type" ON "listings" ("listing_type") /*application='Roomora'*/[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE INDEX "index_listings_on_rent" ON "listings" ("rent") /*application='Roomora'*/[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_listings_on_status" ON "listings" ("status") /*application='Roomora'*/[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_listings_on_user_id" ON "listings" ("user_id") /*application='Roomora'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "student_profiles" CASCADE /*application='Roomora'*/[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "student_profiles" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "user_id" uuid NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "university" character varying, "major" character varying, "age" integer, "graduation_year" integer, "bio" text, "birth_year" integer) /*application='Roomora'*/[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_student_profiles_on_user_id" ON "student_profiles" ("user_id") /*application='Roomora'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE /*application='Roomora'*/[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "clerk_id" character varying NOT NULL, "role" character varying NOT NULL, "first_name" character varying NOT NULL, "last_name" character varying NOT NULL, "email" character varying NOT NULL, "phone" character varying, "avatar_url" character varying, "verified" boolean DEFAULT FALSE NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "last_seen_at" timestamp(6), "onboarded" boolean DEFAULT FALSE NOT NULL) /*application='Roomora'*/[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_clerk_id" ON "users" ("clerk_id") /*application='Roomora'*/[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email") /*application='Roomora'*/[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE INDEX "index_users_on_role" ON "users" ("role") /*application='Roomora'*/[0m
+  [1m[35m (5.4ms)[0m  [1m[35mALTER TABLE "lifestyle_profiles" ADD CONSTRAINT "fk_rails_cd8d9e9c38"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Roomora'*/[0m
+  [1m[35m (2.6ms)[0m  [1m[35mALTER TABLE "listing_photos" ADD CONSTRAINT "fk_rails_0f101060cd"
+FOREIGN KEY ("listing_id")
+  REFERENCES "listings" ("id")
+ /*application='Roomora'*/[0m
+  [1m[35m (1.5ms)[0m  [1m[35mALTER TABLE "listings" ADD CONSTRAINT "fk_rails_baa008bfd2"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Roomora'*/[0m
+  [1m[35m (1.7ms)[0m  [1m[35mALTER TABLE "student_profiles" ADD CONSTRAINT "fk_rails_50894bc2aa"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Roomora'*/[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Roomora'*/[0m
+  [1m[35m (1.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20260319000010) /*application='Roomora'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20260319000009),
+(20260319000008),
+(20260319000007),
+(20260319000006),
+(20260319000005),
+(20260319000004),
+(20260319000003),
+(20260319000002),
+(20260319000001),
+(20260319000000); /*application='Roomora'*/[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (2.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2026-03-19 22:52:56.400809', '2026-03-19 22:52:56.400812') RETURNING "key" /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'aa4ae459d7aba45ec85ad22aa50f30e9629cefec', '2026-03-19 22:52:56.413474', '2026-03-19 22:52:56.413479') RETURNING "key" /*application='Roomora'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3644049477970271895) /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Roomora'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(3644049477970271895) /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Roomora'*/[0m
+  [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."clerk_id" = 'dev_student_1' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Roomora'*/[0m
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."clerk_id" = 'dev_student_1' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Roomora'*/[0m
+  [1m[36mUser Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."clerk_id" = 'dev_student_1' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mUser Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'maria@university.edu' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mUser Create (2.2ms)[0m  [1m[32mINSERT INTO "users" ("clerk_id", "role", "first_name", "last_name", "email", "phone", "avatar_url", "verified", "created_at", "updated_at", "last_seen_at", "onboarded") VALUES ('dev_student_1', 'student', 'Maria', 'Garcia', 'maria@university.edu', '+1234567890', NULL, TRUE, '2026-03-19 22:54:23.052307', '2026-03-19 22:54:23.052307', NULL, FALSE) RETURNING "id" /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT /*application='Roomora'*/[0m
+  [1m[36mStudentProfile Load (1.1ms)[0m  [1m[34mSELECT "student_profiles".* FROM "student_profiles" WHERE "student_profiles"."user_id" = 'fae9c5df-9e36-492b-8e6f-873ffe2a6aac' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Roomora'*/[0m
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."clerk_id" = 'dev_student_1' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mStudentProfile Load (1.1ms)[0m  [1m[34mSELECT "student_profiles".* FROM "student_profiles" WHERE "student_profiles"."user_id" = 'fae9c5df-9e36-492b-8e6f-873ffe2a6aac' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Roomora'*/[0m
+  [1m[36mStudentProfile Create (6.6ms)[0m  [1m[32mINSERT INTO "student_profiles" ("user_id", "created_at", "updated_at", "university", "major", "age", "graduation_year", "bio", "birth_year") VALUES ('fae9c5df-9e36-492b-8e6f-873ffe2a6aac', '2026-03-19 22:56:10.101294', '2026-03-19 22:56:10.101294', 'MIT', 'Computer Science', 21, 2026, 'Computer Science student looking for a quiet place to study', 2003) RETURNING "id" /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT /*application='Roomora'*/[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."clerk_id" = 'dev_landlord_1' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='Roomora'*/[0m
+  [1m[36mUser Exists? (6.4ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."clerk_id" = 'dev_landlord_1' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mUser Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'john@realty.com' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mUser Create (1.0ms)[0m  [1m[32mINSERT INTO "users" ("clerk_id", "role", "first_name", "last_name", "email", "phone", "avatar_url", "verified", "created_at", "updated_at", "last_seen_at", "onboarded") VALUES ('dev_landlord_1', 'landlord', 'John', 'Smith', 'john@realty.com', '+0987654321', NULL, TRUE, '2026-03-19 22:56:10.138734', '2026-03-19 22:56:10.138734', NULL, FALSE) RETURNING "id" /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT /*application='Roomora'*/[0m
+  [1m[36mListing Load (3.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."title" = 'Sunny 2BR near Campus' AND "listings"."user_id" = 'f1248849-f848-4f9d-90bf-e74ebdc4bf86' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='Roomora'*/[0m
+  [1m[36mListing Create (5.0ms)[0m  [1m[32mINSERT INTO "listings" ("user_id", "listing_type", "title", "description", "property_type", "address", "city", "state", "zip_code", "latitude", "longitude", "rent", "security_deposit", "utilities_included", "utilities_cost", "available_date", "lease_term_months", "bedrooms", "bathrooms", "pets_allowed", "parties_allowed", "smoking_allowed", "status", "created_at", "updated_at") VALUES ('f1248849-f848-4f9d-90bf-e74ebdc4bf86', 'property', 'Sunny 2BR near Campus', 'Beautiful 2-bedroom apartment, 5 min walk from campus. Recently renovated with modern kitchen.', 'apartment', '123 University Ave', 'Cambridge', 'MA', '02139', 42.3736, -71.1097, 1800.0, 1800.0, FALSE, 150.0, '2026-08-01', 12, 2, 1, FALSE, FALSE, FALSE, 'active', '2026-03-19 22:56:10.230927', '2026-03-19 22:56:10.230927') RETURNING "id" /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT /*application='Roomora'*/[0m
+  [1m[36mListing Load (0.9ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."title" = 'Cozy Studio Downtown' AND "listings"."user_id" = 'f1248849-f848-4f9d-90bf-e74ebdc4bf86' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='Roomora'*/[0m
+  [1m[36mListing Create (6.2ms)[0m  [1m[32mINSERT INTO "listings" ("user_id", "listing_type", "title", "description", "property_type", "address", "city", "state", "zip_code", "latitude", "longitude", "rent", "security_deposit", "utilities_included", "utilities_cost", "available_date", "lease_term_months", "bedrooms", "bathrooms", "pets_allowed", "parties_allowed", "smoking_allowed", "status", "created_at", "updated_at") VALUES ('f1248849-f848-4f9d-90bf-e74ebdc4bf86', 'property', 'Cozy Studio Downtown', 'Compact studio perfect for a single student. All utilities included. Laundry in building.', 'studio', '456 Main St', 'Cambridge', 'MA', '02142', 42.3625, -71.0862, 1200.0, 1200.0, TRUE, NULL, '2026-07-15', 12, 0, 1, TRUE, FALSE, FALSE, 'active', '2026-03-19 22:56:10.277283', '2026-03-19 22:56:10.277283') RETURNING "id" /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT /*application='Roomora'*/[0m
+  [1m[36mListing Load (0.8ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."title" = 'Room in 3BR Shared Apt' AND "listings"."user_id" = 'fae9c5df-9e36-492b-8e6f-873ffe2a6aac' LIMIT 1 /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='Roomora'*/[0m
+  [1m[36mListing Create (6.5ms)[0m  [1m[32mINSERT INTO "listings" ("user_id", "listing_type", "title", "description", "property_type", "address", "city", "state", "zip_code", "latitude", "longitude", "rent", "security_deposit", "utilities_included", "utilities_cost", "available_date", "lease_term_months", "bedrooms", "bathrooms", "pets_allowed", "parties_allowed", "smoking_allowed", "status", "created_at", "updated_at") VALUES ('fae9c5df-9e36-492b-8e6f-873ffe2a6aac', 'room', 'Room in 3BR Shared Apt', 'Looking for a roommate! Shared 3BR apartment. Your room is furnished. Common areas shared.', 'room', '789 College St', 'Cambridge', 'MA', '02140', 42.388, -71.128, 650.0, 650.0, TRUE, NULL, '2026-09-01', 10, 1, 1, FALSE, FALSE, FALSE, 'active', '2026-03-19 22:56:10.301569', '2026-03-19 22:56:10.301569') RETURNING "id" /*application='Roomora'*/[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT /*application='Roomora'*/[0m
+  [1m[36mUser Count (1.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" /*application='Roomora'*/[0m
+  [1m[36mStudentProfile Count (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "student_profiles" /*application='Roomora'*/[0m
+  [1m[36mListing Count (0.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "listings" /*application='Roomora'*/[0m
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."clerk_id" = 'dev_landlord_1' LIMIT 1 /*application='Roomora'*/[0m
+[ActionDispatch::HostAuthorization::DefaultResponseApp] Blocked hosts: laptop-1g38tktp.local:3000
+Started GET "/api/v1/profile" for 192.168.0.19 at 2026-03-19 19:00:26 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (4.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Roomora'*/[0m
+Processing by Api::V1::ProfilesController#show as HTML
+  [1m[36mUser Load (4.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."clerk_id" = 'dev_landlord_1' LIMIT 1 /*action='show',application='Roomora',controller='profiles'*/[0m
+  ↳ app/controllers/concerns/clerk_authenticatable.rb:13:in 'ClerkAuthenticatable#authenticate_clerk_user!'
+  [1m[36mLifestyleProfile Load (3.4ms)[0m  [1m[34mSELECT "lifestyle_profiles".* FROM "lifestyle_profiles" WHERE "lifestyle_profiles"."user_id" = 'f1248849-f848-4f9d-90bf-e74ebdc4bf86' LIMIT 1 /*action='show',application='Roomora',controller='profiles'*/[0m
+  ↳ app/controllers/api/v1/profiles_controller.rb:39:in 'Api::V1::ProfilesController#user_json'
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (1.51ms)
+Completed 200 OK in 329ms (Views: 9.7ms | ActiveRecord: 47.3ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/up" for 192.168.0.19 at 2026-03-19 19:05:00 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (2.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Roomora'*/[0m
+Processing by Rails::HealthController#show as */*
+  Rendering html template
+  Rendered html template (Duration: 0.4ms | GC: 0.0ms)
+Completed 200 OK in 30ms (Views: 20.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/profile" for 192.168.0.19 at 2026-03-19 19:05:01 -0500
+Processing by Api::V1::ProfilesController#show as */*
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."clerk_id" = 'dev_landlord_1' LIMIT 1 /*action='show',application='Roomora',controller='profiles'*/[0m
+  ↳ app/controllers/concerns/clerk_authenticatable.rb:13:in 'ClerkAuthenticatable#authenticate_clerk_user!'
+  [1m[36mLifestyleProfile Load (0.9ms)[0m  [1m[34mSELECT "lifestyle_profiles".* FROM "lifestyle_profiles" WHERE "lifestyle_profiles"."user_id" = 'f1248849-f848-4f9d-90bf-e74ebdc4bf86' LIMIT 1 /*action='show',application='Roomora',controller='profiles'*/[0m
+  ↳ app/controllers/api/v1/profiles_controller.rb:39:in 'Api::V1::ProfilesController#user_json'
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.51ms)
+Completed 200 OK in 241ms (Views: 5.1ms | ActiveRecord: 23.7ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/api/v1/profile" for 192.168.0.19 at 2026-03-19 19:13:25 -0500
+Processing by Api::V1::ProfilesController#show as */*
+  [1m[36mUser Load (8.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."clerk_id" = 'dev_landlord_1' LIMIT 1 /*action='show',application='Roomora',controller='profiles'*/[0m
+  ↳ app/controllers/concerns/clerk_authenticatable.rb:13:in 'ClerkAuthenticatable#authenticate_clerk_user!'
+  [1m[36mLifestyleProfile Load (2.9ms)[0m  [1m[34mSELECT "lifestyle_profiles".* FROM "lifestyle_profiles" WHERE "lifestyle_profiles"."user_id" = 'f1248849-f848-4f9d-90bf-e74ebdc4bf86' LIMIT 1 /*action='show',application='Roomora',controller='profiles'*/[0m
+  ↳ app/controllers/api/v1/profiles_controller.rb:39:in 'Api::V1::ProfilesController#user_json'
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (6.03ms)
+Completed 200 OK in 439ms (Views: 16.7ms | ActiveRecord: 66.6ms (2 queries, 0 cached) | GC: 0.0ms)
+
+

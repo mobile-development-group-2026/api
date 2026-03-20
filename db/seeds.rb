@@ -7,24 +7,17 @@ student = User.find_or_create_by!(clerk_id: "dev_student_1") do |u|
   u.last_name = "Garcia"
   u.email = "maria@university.edu"
   u.phone = "+1234567890"
-  u.university = "MIT"
   u.verified = true
 end
 
-# Create student profile
+# Create student profile (con los nombres exactos de las columnas)
 student.create_student_profile!(
-  date_of_birth: Date.new(2003, 5, 15),
-  gender: "female",
-  academic_level: "undergrad",
-  budget_min: 400,
-  budget_max: 900,
-  move_in_date: Date.new(2026, 8, 1),
-  noise_level: 2,
-  cleanliness: 4,
-  guests_policy: 3,
-  daily_routine: "early_bird",
-  pets_ok: false,
-  smoking_ok: false
+  university: "MIT",
+  major: "Computer Science",
+  age: 21,
+  graduation_year: 2026,
+  bio: "Computer Science student looking for a quiet place to study",
+  birth_year: 2003
 ) unless student.student_profile
 
 # Create a dev landlord
@@ -107,6 +100,6 @@ end
 
 puts "Seeded: #{User.count} users, #{StudentProfile.count} student profiles, #{Listing.count} listings"
 puts ""
-puts "Dev users for Bruno testing (use X-Dev-Clerk-Id header):"
+puts "Dev users for testing (use X-Dev-Clerk-Id header):"
 puts "  Student: dev_student_1"
 puts "  Landlord: dev_landlord_1"
