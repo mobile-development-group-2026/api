@@ -48,10 +48,10 @@ module Api
           id: profile.id,
           university: profile.university,
           major: profile.major,
-          age: profile.age,
           birth_year: profile.birth_year,
           graduation_year: profile.graduation_year,
-          bio: profile.bio
+          bio: profile.bio,
+          hobbies: profile.hobbies
         }
       end
 
