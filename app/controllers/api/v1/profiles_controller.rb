@@ -44,6 +44,10 @@ module Api
           json[:listing_profile] = listing_profile_json(user.listing_profile)
         end
 
+        if user.landlord? && user.landlord_profile
+          json[:landlord_profile] = landlord_profile_json(user.landlord_profile)
+        end
+
         json
       end
 
@@ -81,6 +85,15 @@ module Api
           max_distance: profile.max_distance,
           amenities: profile.amenities,
           preferences: profile.preferences
+        }
+      end
+
+      def landlord_profile_json(profile)
+        {
+          id: profile.id,
+          birth_year: profile.birth_year,
+          bio: profile.bio,
+          hobbies: profile.hobbies
         }
       end
     end

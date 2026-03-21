@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_one :student_profile, dependent: :destroy
   has_one :lifestyle_profile, dependent: :destroy
   has_one :listing_profile, dependent: :destroy
+  has_one :landlord_profile, dependent: :destroy
   has_many :listings, dependent: :destroy
 
   validates :clerk_id, presence: true, uniqueness: true
