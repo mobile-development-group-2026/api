@@ -15,6 +15,9 @@ Rails.application.routes.draw do
       resources :users, only: [:show]
 
       resources :listings, only: [:index, :show, :create, :update, :destroy] do
+        collection do
+          get :mine
+        end
         member do
           patch :mark_rented
         end

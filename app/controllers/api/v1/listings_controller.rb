@@ -27,6 +27,15 @@ module Api
         }
       end
 
+      def mine
+        listings = current_user.listings
+          .order(created_at: :desc)
+
+        render json: {
+          data: listings.map { |l| listing_json(l) }
+        }
+      end
+
       def show
         render json: { data: listing_json(@listing, include_photos: true) }
       end
