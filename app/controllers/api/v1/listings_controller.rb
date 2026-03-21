@@ -88,7 +88,8 @@ module Api
           :utilities_included, :utilities_cost,
           :available_date, :lease_term_months,
           :bedrooms, :bathrooms,
-          :pets_allowed, :parties_allowed, :smoking_allowed
+          :pets_allowed, :parties_allowed, :smoking_allowed,
+          amenities: [], rules: []
         )
       end
 
@@ -117,6 +118,8 @@ module Api
           pets_allowed: listing.pets_allowed,
           parties_allowed: listing.parties_allowed,
           smoking_allowed: listing.smoking_allowed,
+          amenities: listing.amenities,
+          rules: listing.rules,
           status: listing.status,
           created_at: listing.created_at,
           updated_at: listing.updated_at

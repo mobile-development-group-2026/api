@@ -2,12 +2,16 @@ class Listing < ApplicationRecord
   belongs_to :user
   has_many :listing_photos, dependent: :destroy
 
+  PROPERTY_TYPES = [
+    "apartment", "house", "room", "studio",
+    "Shared room", "Studio", "1 bedroom", "2 bedrooms", "3+ bedrooms"
+  ].freeze
+
   validates :title, presence: true
-  validates :address, presence: true
   validates :rent, presence: true, numericality: { greater_than: 0 }
   validates :listing_type, presence: true, inclusion: { in: %w[property room] }
   validates :status, presence: true, inclusion: { in: %w[active rented archived] }
-  validates :property_type, inclusion: { in: %w[apartment house room studio] }, allow_nil: true
+  validates :property_type, inclusion: { in: PROPERTY_TYPES }, allow_nil: true
 
   scope :active, -> { where(status: "active") }
   scope :by_type, ->(type) { where(listing_type: type) if type.present? }

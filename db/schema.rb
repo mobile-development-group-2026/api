@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_20_000005) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_20_000006) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -68,7 +68,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_20_000005) do
     t.string "title", null: false
     t.text "description"
     t.string "property_type"
-    t.string "address", null: false
+    t.string "address"
     t.string "city"
     t.string "state"
     t.string "zip_code"
@@ -88,6 +88,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_20_000005) do
     t.string "status", default: "active", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "amenities", default: [], array: true
+    t.text "rules", default: [], array: true
     t.index ["latitude", "longitude"], name: "index_listings_on_latitude_and_longitude"
     t.index ["listing_type"], name: "index_listings_on_listing_type"
     t.index ["rent"], name: "index_listings_on_rent"
