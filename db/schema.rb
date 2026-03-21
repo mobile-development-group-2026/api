@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_20_000001) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_20_000002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -83,7 +83,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_20_000001) do
     t.integer "graduation_year"
     t.text "bio"
     t.integer "birth_year"
-    t.string "hobbies"
+    t.text "hobbies", default: [], array: true
     t.index ["user_id"], name: "index_student_profiles_on_user_id", unique: true
   end
 
