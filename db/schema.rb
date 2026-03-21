@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_20_000003) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_20_000004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -36,6 +36,20 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_20_000003) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["listing_id"], name: "index_listing_photos_on_listing_id"
+  end
+
+  create_table "listing_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.integer "max_budget"
+    t.string "property_type"
+    t.date "move_in_date"
+    t.integer "lease_length_months"
+    t.integer "max_distance"
+    t.text "amenities", default: [], array: true
+    t.text "preferences", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_listing_profiles_on_user_id", unique: true
   end
 
   create_table "listings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -104,6 +118,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_20_000003) do
 
   add_foreign_key "lifestyle_profiles", "users"
   add_foreign_key "listing_photos", "listings"
+  add_foreign_key "listing_profiles", "users"
   add_foreign_key "listings", "users"
   add_foreign_key "student_profiles", "users"
 end

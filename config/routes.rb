@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resource :profile, only: [:show, :update], controller: "profiles" do
         resource :student, only: [:show, :update], controller: "student_profiles"
         resource :lifestyle, only: [:show, :update], controller: "lifestyle_profiles"
+        resource :listing_preferences, only: [:show, :update], controller: "listing_profiles"
       end
 
       resources :users, only: [:show]

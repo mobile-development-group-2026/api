@@ -40,6 +40,10 @@ module Api
           json[:lifestyle_profile] = lifestyle_profile_json(user.lifestyle_profile)
         end
 
+        if user.listing_profile
+          json[:listing_profile] = listing_profile_json(user.listing_profile)
+        end
+
         json
       end
 
@@ -65,6 +69,18 @@ module Api
           cleanliness_level: profile.cleanliness_level,
           lifestyle: profile.lifestyle,
           requirements: profile.requirements
+        }
+      end
+      def listing_profile_json(profile)
+        {
+          id: profile.id,
+          max_budget: profile.max_budget,
+          property_type: profile.property_type,
+          move_in_date: profile.move_in_date,
+          lease_length_months: profile.lease_length_months,
+          max_distance: profile.max_distance,
+          amenities: profile.amenities,
+          preferences: profile.preferences
         }
       end
     end
