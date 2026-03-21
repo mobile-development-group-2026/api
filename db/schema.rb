@@ -10,25 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_20_000002) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_20_000003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
 
   create_table "lifestyle_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
-    t.integer "noise_level"
     t.integer "cleanliness_level"
-    t.string "sleep_schedule"
-    t.boolean "smoking_allowed", default: false, null: false
-    t.boolean "pets_allowed", default: false, null: false
-    t.boolean "parties_allowed", default: false, null: false
-    t.integer "guest_frequency"
-    t.text "lifestyle_tags"
-    t.date "move_in_date"
-    t.decimal "max_budget", precision: 10, scale: 2
+    t.integer "sleep_schedule"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "spots_available", default: 1
+    t.string "move_in_month"
+    t.integer "gender_preference", default: 0
+    t.text "lifestyle", default: [], array: true
+    t.text "requirements", default: [], array: true
     t.index ["user_id"], name: "index_lifestyle_profiles_on_user_id", unique: true
   end
 
