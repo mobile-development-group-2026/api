@@ -67,11 +67,11 @@ module Api
       end
 
       def application_params
-        params.require(:application).permit(:preferred_visit_at, :student_notes)
+        params.fetch(:application, {}).permit(:preferred_visit_at, :student_notes)
       end
 
       def update_params
-        params.require(:application).permit(:status, :landlord_notes)
+        params.fetch(:application, {}).permit(:status, :landlord_notes)
       end
 
       def application_json(app)
