@@ -28,6 +28,7 @@ module ListingSerializer
       rules: listing.rules,
       status: listing.status,
       favorites_count: listing.favorites.size,
+      views_count: listing.views_count,
       created_at: listing.created_at,
       updated_at: listing.updated_at
     }

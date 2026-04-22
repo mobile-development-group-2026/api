@@ -2,8 +2,8 @@ module Api
   module V1
     class ListingsController < BaseController
       include ListingSerializer
-      skip_before_action :authenticate_clerk_user!, only: [:index, :show]
-      before_action :set_listing, only: [:show, :update, :destroy, :mark_rented]
+      skip_before_action :authenticate_clerk_user!, only: [:index, :show, :view]
+      before_action :set_listing, only: [:show, :update, :destroy, :mark_rented, :view]
 
       def index
         listings = Listing.includes(:favorites)
@@ -74,6 +74,14 @@ module Api
 
         @listing.destroy!
         render json: { message: "Listing deleted" }
+      end
+
+      def view
+        # Don't count the owner viewing their own listing
+        unless current_user&.id == @listing.user_id
+          @listing.increment!(:views_count)
+        end
+        render json: { data: { views_count: @listing.views_count } }
       end
 
       def mark_rented

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         end
         member do
           patch :mark_rented
+          post :view
         end
         resources :photos, only: [:create, :destroy], controller: "listing_photos"
         resources :applications, only: [:index, :create]
