@@ -22,6 +22,11 @@ Rails.application.routes.draw do
           patch :mark_rented
         end
         resources :photos, only: [:create, :destroy], controller: "listing_photos"
+        resources :applications, only: [:index, :create]
+      end
+
+      resources :applications, only: [:update] do
+        collection { get :mine }
       end
     end
   end

@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_20_000007) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_21_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "listing_id", null: false
+    t.uuid "student_id", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "preferred_visit_at"
+    t.text "student_notes"
+    t.text "landlord_notes"
+    t.datetime "reviewed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listing_id"], name: "index_applications_on_listing_id"
+    t.index ["student_id", "listing_id"], name: "index_applications_on_student_id_and_listing_id", unique: true
+    t.index ["student_id"], name: "index_applications_on_student_id"
+  end
 
   create_table "landlord_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
@@ -128,6 +143,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_20_000007) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "applications", "listings"
+  add_foreign_key "applications", "users", column: "student_id"
   add_foreign_key "landlord_profiles", "users"
   add_foreign_key "lifestyle_profiles", "users"
   add_foreign_key "listing_photos", "listings"
