@@ -2,6 +2,7 @@ class Listing < ApplicationRecord
   belongs_to :user
   has_many :listing_photos, dependent: :destroy
   has_many :applications, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   PROPERTY_TYPES = [
     "apartment", "house", "room", "studio",

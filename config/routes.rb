@@ -23,7 +23,10 @@ Rails.application.routes.draw do
         end
         resources :photos, only: [:create, :destroy], controller: "listing_photos"
         resources :applications, only: [:index, :create]
+        resource :favorite, only: [:create, :destroy], controller: "favorites"
       end
+
+      resources :favorites, only: [:index]
 
       resources :applications, only: [:update] do
         collection { get :mine }

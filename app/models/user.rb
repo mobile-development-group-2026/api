@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_one :landlord_profile, dependent: :destroy
   has_many :listings, dependent: :destroy
   has_many :student_applications, class_name: "Application", foreign_key: :student_id, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorited_listings, through: :favorites, source: :listing
 
   validates :clerk_id, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
