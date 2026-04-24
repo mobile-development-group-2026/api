@@ -32,6 +32,8 @@ Rails.application.routes.draw do
       resources :applications, only: [:update] do
         collection { get :mine }
       end
+      post "proximity_events/bulk", to: "proximity_events#bulk"
+      get "analytics/gps_landlord", to: "analytics#gps_landlord"
     end
   end
 end
