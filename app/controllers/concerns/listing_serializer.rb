@@ -1,6 +1,8 @@
 module ListingSerializer
-  def listing_json(listing, include_photos: false)
-    json = {
+  def listing_json(listing)
+    sorted_photos = listing.listing_photos.sort_by(&:position)
+
+    {
       id: listing.id,
       user_id: listing.user_id,
       listing_type: listing.listing_type,
@@ -29,17 +31,10 @@ module ListingSerializer
       status: listing.status,
       favorites_count: listing.favorites.size,
       views_count: listing.views_count,
-      cover_photo_url: listing.listing_photos.order(:position).first&.photo_url,
+      cover_photo_url: sorted_photos.first&.photo_url,
+      photos: sorted_photos.map { |p| { id: p.id, photo_url: p.photo_url, position: p.position } },
       created_at: listing.created_at,
       updated_at: listing.updated_at
     }
-
-    if include_photos
-      json[:photos] = listing.listing_photos.order(:position).map do |photo|
-        { id: photo.id, photo_url: photo.photo_url, position: photo.position }
-      end
-    end
-
-    json
   end
 end

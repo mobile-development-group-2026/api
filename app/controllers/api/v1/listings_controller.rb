@@ -6,7 +6,7 @@ module Api
       before_action :set_listing, only: [:show, :update, :destroy, :mark_rented, :view]
 
       def index
-        listings = Listing.includes(:favorites)
+        listings = Listing.includes(:favorites, :listing_photos)
           .then { |q| q.by_type(params[:type]) }
           .then { |q| q.by_city(params[:city]) }
           .then { |q| q.by_status(params[:status] || "active") }
@@ -30,7 +30,7 @@ module Api
 
       def mine
         listings = current_user.listings
-          .includes(:favorites)
+          .includes(:favorites, :listing_photos)
           .order(created_at: :desc)
 
         render json: {
@@ -39,7 +39,7 @@ module Api
       end
 
       def show
-        render json: { data: listing_json(@listing, include_photos: true) }
+        render json: { data: listing_json(@listing) }
       end
 
       def create
