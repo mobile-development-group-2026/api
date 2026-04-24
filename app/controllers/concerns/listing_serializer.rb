@@ -29,6 +29,7 @@ module ListingSerializer
       status: listing.status,
       favorites_count: listing.favorites.size,
       views_count: listing.views_count,
+      cover_photo_url: listing.listing_photos.order(:position).first&.photo_url,
       created_at: listing.created_at,
       updated_at: listing.updated_at
     }
