@@ -1,22 +1,26 @@
-class Api::V1::AnalyticsController < ApplicationController
-  def gps_landlord
-    events = ProximityEvent.all
-
-    total = events.count
-
-    sectors = events.group(:sector).count.map do |sector, count|
-      {
-        sector: sector,
-        visits: count
-      }
-    end
-
-    render json: {
-      total_proximity_visits: total,
-      unique_tracked_sectors: sectors.size,
-      sector_analytics: sectors,
-      hourly_peaks: [],
-      daily_peaks: []
+# analytics_controller.rb
+render json: {
+  sector_analytics: sectors.map do |s|
+    {
+      id: s[:sector],
+      sector: s[:sector],
+      interest_level: interest_level(s[:visits]),
+      unique_visitors: s[:visits],
+      visit_count: s[:visits],
+      average_daily_traffic: s[:visits].to_f
     }
-  end
+  end,
+  hourly_peaks: [],
+  daily_peaks: [],
+  total_visits: total,
+  unique_sectors: sectors.size,
+  last_synced_at: nil
+}
+
+private
+
+def interest_level(count)
+  return "Low" if count <= 2
+  return "Medium" if count <= 9
+  "High"
 end
