@@ -33,7 +33,11 @@ Rails.application.routes.draw do
         collection { get :mine }
       end
       post "proximity_events/bulk", to: "proximity_events#bulk"
-      get "analytics/gps_landlord", to: "analytics#gps_landlord"
+      get "analytics/gps_landlord",        to: "analytics#gps_landlord"
+      get "analytics/onboarding_funnel",   to: "analytics#onboarding_funnel"
+      get "analytics/favorites_funnel",    to: "analytics#favorites_funnel"
+      get "analytics/application_approval",to: "analytics#application_approval"
+      get "analytics/conversion_matrix",   to: "analytics#conversion_matrix"
     end
   end
 end
